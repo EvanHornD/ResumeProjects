@@ -11,8 +11,8 @@ I want to eventually create an interactive display that allows for searching for
 Game_Engine -
 This project is the project I have been wanting to make as long as I have had an interest in software and game developement, it wasnt until I began learning the basics of object oriented programming and The java swing library had I actually began to understand how a project like this could be made. 
 I started the project shortly after I finished the Wordle project I made in CS 1, it inspired me to attempt to make a project that was more organized and with more functionality 
-// to be finished
 if you want to see the entire history of the project this is a github link to where I actively work on the project https://github.com/EvanHornD/UntitledGameEngine
+// to be finished
 
 Wordle -
 //description in progress
