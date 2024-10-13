@@ -221,8 +221,15 @@ public class Lab3_Horn{
     // the input frame is drawn immediately after the console is cleared
     // the flush command instantly sends the print command whether or not anything else is in que
     public static void drawNextFrame(String frame){
-        System.out.print("\033[H\033[2J" + frame);
-        System.out.flush(); 
+        //System.out.print("\033[H\033[2J" + frame);
+        //System.out.flush(); 
+
+        //The code above doesnt work when running from an EXE I just found out
+        //I have to use this code to clear the line which is much slower and I dont know how it works, I just copy and pasted it
+        // I am assuming it runs a console command to clear the console
+        try { new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();}
+        catch (Exception e) {}
+        System.out.println(frame);
     }
 
     // increases and decreases the cursor based on the button that was pressed and wheather or not it would move the cursor out of the bounds of the menu
@@ -276,21 +283,29 @@ public class Lab3_Horn{
     public static boolean keyState = false;
     // inistializing the window with a key listener
     public static void createWindow(int[] screenDimensions) {
-            window = new JFrame("shop");
-            window.setSize(0,0);
-            window.setLocation(0, screenDimensions[1]); // Position bellow the screen
-            window.setFocusable(true);
-            window.requestFocus();
-            window.setResizable(false);
-            window.setUndecorated(true);
-            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            window.setVisible(true);
-            window.setAlwaysOnTop(true);
+        window = new JFrame("shop");
 
-            window.addKeyListener(new KeyAdapter() {public void keyPressed(KeyEvent e) {
-                keyState = true;
-                keyIndex = e.getKeyCode();
-            }});
+        window.setSize(screenDimensions[0], 75);  // A small visible window
+        window.setLocation(0, 0);  // Position at the top of the screen
+
+        /*
+         * This label and the placement of the window was recently changed
+         */
+        JLabel message = new JLabel("Please tab into this window to use inputs.", SwingConstants.CENTER);
+        window.add(message);
+
+        window.setFocusable(true);
+        window.requestFocus();
+        window.setResizable(false);
+        window.setUndecorated(false);  // Keep window borders for visibility
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setAlwaysOnTop(true);  // Stay on top of other windows
+        window.setVisible(true);
+
+        window.addKeyListener(new KeyAdapter() {public void keyPressed(KeyEvent e) {
+            keyState = true;
+            keyIndex = e.getKeyCode();
+        }});
     }
 
     public static void closeWindow() {
@@ -312,7 +327,7 @@ public class Lab3_Horn{
 
     public static void main(String[] args) throws Exception{
         //Read CSV file
-        String [][] shop = scanItems(new File("itemList.csv"));
+        String [][] shop = scanItems(new File("Lab3\\itemList.csv"));
         int displayHeight = 13;
       
         //The program is run in a thread separate from the JFrame because threads have useful commands that allow for allowing for changing the fps
@@ -328,11 +343,6 @@ public class Lab3_Horn{
 
         //prints the instructions on how the program works
         drawNextFrame("\n".repeat(7)+"""
-                                                 ==========PLEASE READ==========
-                        The programs input detection is run in an invisible Window which is automatically put into focus,
-                        if the Window goes out of focus, you will lose control of the program
-                        click on the programs icon on the task bar to be able to continue using the program.
-                      
                       ---CONTROLS---
                        W - up
                        S - down
