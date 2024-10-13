@@ -385,29 +385,29 @@ public class CL2_Extra {
     static boolean keyState = false;
     public static void createWindow(int[] screenDimensions,int[] gameDimensions) {
             window = new JFrame("mazeGame");
-            window.setSize(0,gameDimensions[1]); // Set size screen width
-            window.setLocation(0, screenDimensions[1]-(gameDimensions[1]+40)); // Position at bottom of screen
+
+            window.setSize(screenDimensions[0],75);
+            window.setLocation(0, 0);
+
+            /*
+            * This label and the placement of the window was recently changed
+            */
+            JLabel message = new JLabel("Please tab into this window to use inputs.", SwingConstants.CENTER);
+            window.add(message);
+
+
             window.setFocusable(true);
             window.requestFocus();
             window.setResizable(false);
-            window.setUndecorated(true);
+            window.setUndecorated(false);  
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            window.setAlwaysOnTop(true);  
             window.setVisible(true);
-            window.setAlwaysOnTop(true);
 
             window.addKeyListener(new KeyAdapter() {public void keyPressed(KeyEvent e) {
                 keyState = true;
                 keyIndex = e.getKeyCode();
             }});
-
-            window.addFocusListener( new FocusListener() {
-                public void focusGained(FocusEvent e) {
-                    window.setLocation(0, screenDimensions[1]);
-                }
-                public void focusLost(FocusEvent e) {
-                    window.setLocation(0, screenDimensions[1]-(gameDimensions[1]+40));
-                }
-            });
     }
 
     public static void closeWindow() {
