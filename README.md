@@ -11,8 +11,5 @@ I want to eventually create an interactive display that allows for searching for
 Wordle
 //description in progress
 
-Video Game Shop
-//description in progress
-
 Maze_Game
 //description in progess
